@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PortalTextureSetup : MonoBehaviour
 {
+    public Camera cameraA;
     public Camera cameraB;
 
+    public Material cameraMatA;
     public Material cameraMatB;
 
     // Start is called before the first frame update
@@ -17,6 +19,13 @@ public class PortalTextureSetup : MonoBehaviour
         }
         cameraB.targetTexture = new RenderTexture(Screen.width, Screen.height, 24);
         cameraMatB.mainTexture = cameraB.targetTexture;
+
+        if (cameraA.targetTexture != null)
+        {
+            cameraA.targetTexture.Release();
+        }
+        cameraA.targetTexture = new RenderTexture(Screen.width, Screen.height, 24);
+        cameraMatA.mainTexture = cameraA.targetTexture;
     }
 
 }

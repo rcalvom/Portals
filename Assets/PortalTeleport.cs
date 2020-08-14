@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PortalTeleport : MonoBehaviour
 {
-    public Transform player;
+    public CharacterController player;
     public Transform receiver;
 
     private bool playerBump = false;
@@ -13,18 +13,18 @@ public class PortalTeleport : MonoBehaviour
     {
         if ( playerBump )
         {
-            Vector3 portalToPlayer = player.position - transform.position;
+            Vector3 portalToPlayer = player.transform.position - transform.position;
             float dotProduct = Vector3.Dot(transform.up, portalToPlayer);
 
             if ( dotProduct < 0f)
             {
                 float rotationDiff = Quaternion.Angle(transform.rotation, receiver.rotation);
-                //rotationDiff += 180;
-                //player.Rotate(Vector3.up, rotationDiff);
-                Debug.Log("OLA");
+                rotationDiff += 180f;
+                player.transform.Rotate(Vector3.up, rotationDiff);
                 Vector3 positionOffset = Quaternion.Euler(0f,rotationDiff,0f) * portalToPlayer;
-                //player.position = receiver.position + positionOffset;
-                player.position = new Vector3(100f, 10f, 10f);
+                player.enabled =false;
+                player.transform.position = receiver.position + positionOffset;
+                player.enabled =true;
 
                 playerBump = false;
 
